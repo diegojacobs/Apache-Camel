@@ -11,6 +11,10 @@ import org.apache.camel.component.facebook.FacebookConstants;
 import org.apache.camel.component.facebook.config.FacebookConfiguration;
 import java.util.ArrayList;
 
+/**
+*
+* @author Diego Jacobs 13160
+*/
 public class TwitterFacebookRoute extends RouteBuilder {
 
     private String searchTerm;
@@ -138,6 +142,6 @@ public class TwitterFacebookRoute extends RouteBuilder {
                 .when(header("timeline").isEqualTo("yes"))
                 .to("twitter://timeline/user")
                 .otherwise()
-                .to("twitter://directmessage?user=proyecto2BD");
+                .to("twitter://directmessage?user=DA_Orozco_");
     }
 }

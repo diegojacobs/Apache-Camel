@@ -21,7 +21,7 @@ import org.apache.camel.Processor;
 
 /**
  *
- * @author PabloJavier
+ * @author Diego Jacobs 13160
  */
 public class FacebookPostProcessor implements Processor{
 

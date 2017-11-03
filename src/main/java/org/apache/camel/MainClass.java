@@ -2,16 +2,20 @@ package org.apache.camel;
 
 import org.apache.camel.main.Main;
 
+/**
+*
+* @author Diego Jacobs 13160
+*/
 public class MainClass {
 	//Twitter
-    private static String consumerKey = "<>";
-    private static String consumerSecret = "<>";
-    private static String accessToken = "<>";
-    private static String accessTokenSecret = "<>";
+    private static String consumerKey = "<EggHAYHLpVR0Pqdky20q43xhd>";
+    private static String consumerSecret = "<XYIzhjOYHBsgCDiU00EdFOH5kdwc1hqz7VF7zv1NOt7B2DakAW>";
+    private static String accessToken = "<69966536-GDW8RAFjZzoDpb8wZC7dgoK7C6gi46OLkD3oqoOcC>";
+    private static String accessTokenSecret = "<TWEjUDtNxeHZAGRO6SMUsJ50SOjnfVgyzuLC8ZetdXYP9>";
     
     //Facebook
-    private static String OAuthAppId = "<>";
-    private static String OAuthAppSecret = "<>";
+    private static String OAuthAppId = "<148937112519047>";
+    private static String OAuthAppSecret = "<72c87306b3677c1606df72da92f9448f>";
     
     private MainClass() {
         // to pass checkstyle we have a private constructor
@@ -36,7 +40,7 @@ public class MainClass {
         
         // add facebook pages
         route.addFacebookId("9gag");
-        route.addFacebookId("fakeuselesspage");
+        //route.addFacebookId("fakeuselesspage");
 
         // add our routes to Camel
         main.addRouteBuilder(route);
