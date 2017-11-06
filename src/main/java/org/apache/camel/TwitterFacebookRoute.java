@@ -142,6 +142,6 @@ public class TwitterFacebookRoute extends RouteBuilder {
                 .when(header("timeline").isEqualTo("yes"))
                 .to("twitter://timeline/user")
                 .otherwise()
-                .to("twitter://directmessage?user=DA_Orozco_");
+                .to("twitter://directmessage?user=diegojacobs95");
     }
 }
