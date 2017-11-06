@@ -26,6 +26,7 @@ public class TwitterFacebookRoute extends RouteBuilder {
     private String OAuthAppId;
     private String OAuthAppSecret;
     private ArrayList<String> fbIds;
+    private ArrayList<String> twitterAccounts;
     
     public TwitterFacebookRoute() {
         fbIds = new ArrayList<>();
@@ -34,6 +35,11 @@ public class TwitterFacebookRoute extends RouteBuilder {
     public void addFacebookId(String fbId)
     {
         fbIds.add(fbId);
+    }
+    
+    public void addTwitterAccount(String twitterAccount)
+    {
+    	twitterAccounts.add(twitterAccount);
     }
     
     public String getOAuthAppId() {
@@ -125,7 +131,7 @@ public class TwitterFacebookRoute extends RouteBuilder {
                     new Date(System.currentTimeMillis() - TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS))) + ")";
 
         //Crear rutas de origen para cada pagina que se desea
-        for(String fbId: fbIds)
+        for(String fbId: this.fbIds)
         {
             from("facebook://getFeed?userId=" 
                     + fbId + "&reading.limit=2&reading.since="
@@ -133,15 +139,12 @@ public class TwitterFacebookRoute extends RouteBuilder {
                     .to("direct:aggregateRoute");
         }
         
-        //Ejecutar el resto del ruteo
-        from("direct:aggregateRoute")
-                .process(processor)
-                .filter(header("isNull").isEqualTo("no"))
-                .filter(header("post").isEqualTo("yes"))
-                .choice()
-                .when(header("timeline").isEqualTo("yes"))
-                .to("twitter://timeline/user")
-                .otherwise()
-                .to("twitter://directmessage?user=diegojacobs95");
+        
+        for(String twAccount: this.twitterAccounts)
+        {
+        	//Ejecutar el resto del ruteo
+            from("direct:aggregateRoute")
+            		.to("twitter://directmessage?user=twAccount");
+        }
     }
 }

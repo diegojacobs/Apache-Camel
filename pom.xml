@@ -39,7 +39,13 @@
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
     </dependency>
-
+	<!-- logging -->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    
   </dependencies>
 
   <build>
