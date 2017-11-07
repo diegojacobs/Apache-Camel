@@ -30,6 +30,7 @@ public class TwitterFacebookRoute extends RouteBuilder {
     
     public TwitterFacebookRoute() {
         fbIds = new ArrayList<>();
+        twitterAccounts = new ArrayList<>();
     }
 
     public void addFacebookId(String fbId)
@@ -128,23 +129,26 @@ public class TwitterFacebookRoute extends RouteBuilder {
 
         // Fecha desde cuando se desea contenido
         String since = "RAW(" + new SimpleDateFormat(FacebookConstants.FACEBOOK_DATE_FORMAT).format(
-                    new Date(System.currentTimeMillis() - TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS))) + ")";
+                    new Date(System.currentTimeMillis() - TimeUnit.MILLISECONDS.convert(15, TimeUnit.DAYS))) + ")";
 
         //Crear rutas de origen para cada pagina que se desea
         for(String fbId: this.fbIds)
         {
-            from("facebook://getFeed?userId=" 
+        	from("facebook://getFeed?userId=" 
                     + fbId + "&reading.limit=2&reading.since="
                     + since + "&consumer.initialDelay=1000&consumer.delay=3000&consumer.sendEmptyMessageWhenIdle=true")
                     .to("direct:aggregateRoute");
         }
         
-        
         for(String twAccount: this.twitterAccounts)
         {
         	//Ejecutar el resto del ruteo
             from("direct:aggregateRoute")
-            		.to("twitter://directmessage?user=twAccount");
+                .process(processor)
+                .filter(header("isNull").isEqualTo("no"))
+                .filter(header("post").isEqualTo("yes"))
+                .filter(header("message").contains("#LaLiga"))
+                .to("twitter://directmessage?user=" + twAccount);
         }
     }
 }

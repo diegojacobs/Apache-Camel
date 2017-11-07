@@ -60,7 +60,7 @@ public class MainClass {
         
         // add Tiwtter Accounts
         route.addTwitterAccount("diegojacobs95");
-        route.addTwitterAccount("DA_Orozco_");
+        //route.addTwitterAccount("DA_Orozco_");
 
         // add our routes to Camel
         main.addRouteBuilder(route);
