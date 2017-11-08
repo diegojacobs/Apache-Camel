@@ -57,10 +57,14 @@ public class MainClass {
         route.addFacebookId("sport.es");
         route.addFacebookId("MundoDeportivo.com");
         route.addFacebookId("Marca");
+        route.addFacebookId("rusia2018.comunidad");
+        route.addFacebookId("2018MundialRusia");
+        route.addFacebookId("MundialRussia2018.fifa");
+        route.addFacebookId("fifaworldcup");
         
-        // add Tiwtter Accounts
+        // add Twitter Accounts
         route.addTwitterAccount("diegojacobs95");
-        //route.addTwitterAccount("DA_Orozco_");
+        route.addTwitterAccount("DA_Orozco_");
 
         // add our routes to Camel
         main.addRouteBuilder(route);

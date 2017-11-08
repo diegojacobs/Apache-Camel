@@ -125,7 +125,7 @@ public class TwitterFacebookRoute extends RouteBuilder {
 
      
         // Procesador
-        Processor processor = new FacebookPostProcessor();        
+        Processor processor = new FacebookPostFilter();        
 
         // Fecha desde cuando se desea contenido
         String since = "RAW(" + new SimpleDateFormat(FacebookConstants.FACEBOOK_DATE_FORMAT).format(
@@ -140,15 +140,14 @@ public class TwitterFacebookRoute extends RouteBuilder {
                     .to("direct:aggregateRoute");
         }
         
-        for(String twAccount: this.twitterAccounts)
-        {
-        	//Ejecutar el resto del ruteo
-            from("direct:aggregateRoute")
-                .process(processor)
-                .filter(header("isNull").isEqualTo("no"))
-                .filter(header("post").isEqualTo("yes"))
-                .filter(header("message").contains("#LaLiga"))
-                .to("twitter://directmessage?user=" + twAccount);
-        }
+    	//Ejecutar el resto del ruteo
+        from("direct:aggregateRoute")
+            .process(processor)
+            .filter(header("post").isEqualTo("yes"))
+            .choice()
+            .when(header("Content-Type").isEqualTo("rusia"))
+            .to("twitter://directmessage?user=" + this.twitterAccounts.get(0))
+            .otherwise()
+            .to("twitter://directmessage?user=" + this.twitterAccounts.get(1));
     }
 }
